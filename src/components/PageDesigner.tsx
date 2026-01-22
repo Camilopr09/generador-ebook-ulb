@@ -5,6 +5,14 @@ import {WysiwygEditor} from './WysiwygEditor'
 export const PageDesigner: React.FC = () => {
   const {project, updatePage, deletePage} = useProject()
   const [selectedId, setSelectedId] = useState<string | null>(project.pages[0]?.id || null)
+  
+  // Actualizar selectedId cuando se añade una página nueva
+  React.useEffect(() => {
+    if (project.pages.length > 0 && (!selectedId || !project.pages.find(p => p.id === selectedId))) {
+      setSelectedId(project.pages[project.pages.length - 1].id)
+    }
+  }, [project.pages.length, selectedId])
+  
   const page = project.pages.find(p => p.id === selectedId)
 
   if (!page) return (
