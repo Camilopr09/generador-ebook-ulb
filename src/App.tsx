@@ -19,13 +19,13 @@ const AppContent: React.FC = () => {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--ulb-bg)' }}>
       <Header />
-      <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '16px' }}>
+      <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '20px' }}>
         {/* Grid superior: CoverDesigner + MainControls */}
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '24px',
-          marginBottom: '24px'
+          gap: '20px',
+          marginBottom: '28px'
         }}>
           <div style={{ gridColumn: window.innerWidth >= 1024 ? 'span 2' : 'auto' }}>
             <CoverDesigner />
@@ -36,7 +36,7 @@ const AppContent: React.FC = () => {
         </div>
 
         {/* PageDesigner */}
-        <div style={{ minHeight: '384px' }}>
+        <div style={{ minHeight: '400px' }}>
           <PageDesigner />
         </div>
       </main>

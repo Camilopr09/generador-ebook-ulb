@@ -1,36 +1,41 @@
 :root {
-  /* Primary Colors */
-  --ulb-primary: #D61F26;
-  --ulb-primary-hover: #B8181E;
+  /* Primary Colors - Apple Style */
+  --ulb-primary: #007AFF;
+  --ulb-primary-hover: #0051D5;
   
-  /* Ink & Text */
-  --ulb-ink: #111111;
+  /* Text & Ink */
+  --ulb-ink: #000000;
   
-  /* Accent - Gold */
-  --ulb-gold: #C9A24A;
-  --ulb-gold-hover: #B38B37;
+  /* Accent - Silver */
+  --ulb-gold: #A2845E;
+  --ulb-gold-hover: #8B6F47;
   
   /* Base Colors */
   --ulb-white: #FFFFFF;
   
-  /* Neutrals */
-  --ulb-bg: #F6F7FB;
+  /* Neutrals - Apple Gray */
+  --ulb-bg: #F5F5F7;
   --ulb-surface: #FFFFFF;
-  --ulb-border: #E6E8F0;
+  --ulb-border: #D2D2D7;
+  --ulb-border-subtle: #E8E8ED;
   
   /* Text */
-  --ulb-text: #111111;
-  --ulb-text-muted: #667085;
+  --ulb-text: #000000;
+  --ulb-text-muted: #86868B;
+  --ulb-text-light: #A1A1A6;
   
   /* States */
-  --ulb-error: #D92D20;
-  --ulb-success: #12B76A;
-  --ulb-warning: #F59E0B;
+  --ulb-error: #FF3B30;
+  --ulb-success: #34C759;
+  --ulb-warning: #FF9500;
+  
+  /* Special */
+  --ulb-secondary: #F5F5F7;
   
   /* Dark Mode */
-  --dark-bg: #0B0D12;
-  --dark-surface: #121826;
-  --dark-text: #F2F4F7;
+  --dark-bg: #000000;
+  --dark-surface: #1C1C1E;
+  --dark-text: #F5F5F7;
 }
 
 /* Base styles */
@@ -44,7 +49,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* Focus ring ULB */
+/* Focus ring Apple Style */
 :focus-visible {
   outline: 2px solid var(--ulb-primary);
   outline-offset: 2px;
@@ -54,5 +59,57 @@ input:focus,
 textarea:focus,
 select:focus {
   border-color: var(--ulb-primary);
-  box-shadow: 0 0 0 3px rgba(214, 31, 38, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* Apple-style card */
+.apple-card {
+  background: var(--ulb-surface);
+  border: 1px solid var(--ulb-border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.apple-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Apple-style button */
+.apple-button {
+  border-radius: 8px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.apple-button:hover:not(:disabled) {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.apple-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.apple-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Apple-style input */
+.apple-input {
+  border: 1px solid var(--ulb-border-subtle);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  background: var(--ulb-surface);
+}
+
+.apple-input:focus {
+  border-color: var(--ulb-primary);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
 }
