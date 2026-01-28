@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useProject } from '../context/ProjectContext'
+import { useResponsive } from '../hooks/useResponsive'
 import { Page } from '../context/ProjectContext'
 
 export const MainControls: React.FC = () => {
   const { project, addPage } = useProject()
+  const { isMobile, isTablet } = useResponsive()
   const [generating, setGenerating] = useState(false)
 
   if (!project) return null
@@ -36,54 +38,116 @@ export const MainControls: React.FC = () => {
     }
   }
 
+  const padding = isMobile ? '12px 14px' : isTablet ? '14px 16px' : '16px 18px'
+  const gap = isMobile ? '10px' : '12px'
+  const buttonPadding = isMobile ? '10px 12px' : '12px 16px'
+
   return (
-    <div className="apple-card p-5 sm:p-6 h-fit">
-      <div className="pb-4 sm:pb-5" style={{ borderBottomWidth: '1px', borderBottomColor: 'var(--ulb-border-subtle)' }}>
-        <h2 className="text-base sm:text-lg font-semibold" style={{ color: 'var(--ulb-text)' }}>
+    <div className="apple-card" style={{ padding }}>
+      <div style={{ 
+        paddingBottom: isMobile ? '10px' : '12px', 
+        borderBottomWidth: '1px', 
+        borderBottomColor: 'var(--ulb-border-subtle)',
+        marginBottom: isMobile ? '12px' : '14px'
+      }}>
+        <h2 style={{ 
+          fontSize: isMobile ? '15px' : '16px', 
+          fontWeight: '600',
+          color: 'var(--ulb-text)',
+          margin: 0
+        }}>
           Controles
         </h2>
-        <p style={{ fontSize: '13px', color: 'var(--ulb-text-muted)', margin: '4px 0 0 0' }}>
-          Gestiona tu proyecto
+        <p style={{ 
+          fontSize: isMobile ? '12px' : '13px', 
+          color: 'var(--ulb-text-muted)', 
+          margin: '3px 0 0 0'
+        }}>
+          {isMobile ? 'Gestión' : 'Gestiona tu proyecto'}
         </p>
       </div>
 
-      <div className="space-y-3 pt-5 sm:pt-6">
+      <div style={{ display: 'flex', flexDirection: 'column', gap }}>
         <button
           onClick={handleAddPage}
-          className="apple-button w-full text-white font-medium py-3"
-          style={{ backgroundColor: 'var(--ulb-primary)' }}
+          className="apple-button"
+          style={{ 
+            backgroundColor: 'var(--ulb-primary)',
+            color: 'white',
+            fontWeight: 'medium',
+            padding: buttonPadding,
+            fontSize: isMobile ? '13px' : '14px',
+            width: '100%'
+          }}
           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary-hover)'}
           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary)'}
         >
-          + Nueva Página
+          {isMobile ? '+ Página' : '+ Nueva Página'}
         </button>
 
         <button
           onClick={handleGenerate}
           disabled={generating}
-          className="apple-button w-full text-white font-medium py-3 disabled:opacity-50 disabled:cursor-not-allowed"
-          style={{ backgroundColor: 'var(--ulb-text)' }}
+          className="apple-button"
+          style={{ 
+            backgroundColor: 'var(--ulb-text)',
+            color: 'white',
+            fontWeight: 'medium',
+            padding: buttonPadding,
+            fontSize: isMobile ? '13px' : '14px',
+            width: '100%',
+            opacity: generating ? 0.5 : 1,
+            cursor: generating ? 'not-allowed' : 'pointer'
+          }}
           onMouseEnter={(e) => !generating && (e.currentTarget.style.backgroundColor = '#333333')}
           onMouseLeave={(e) => !generating && (e.currentTarget.style.backgroundColor = 'var(--ulb-text)')}
         >
-          {generating ? '⏳ Generando...' : '⬇ Descargar EPUB'}
+          {generating ? '⏳ Generando...' : isMobile ? '⬇ EPUB' : '⬇ Descargar EPUB'}
         </button>
 
         {/* Stats */}
-        <div className="p-4 sm:p-5 rounded-lg mt-4 sm:mt-5" style={{ backgroundColor: 'var(--ulb-secondary)' }}>
-          <p className="text-xs font-semibold mb-3" style={{ color: 'var(--ulb-text)' }}>
-            Estado del Proyecto
+        <div style={{ 
+          padding: isMobile ? '10px 12px' : '12px 14px', 
+          borderRadius: 'var(--radius-lg)',
+          backgroundColor: 'var(--ulb-secondary)',
+          marginTop: isMobile ? '8px' : '10px'
+        }}>
+          <p style={{ 
+            fontSize: isMobile ? '11px' : '12px', 
+            fontWeight: '600',
+            color: 'var(--ulb-text)',
+            margin: '0 0 8px 0'
+          }}>
+            Estado
           </p>
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-xs" style={{ color: 'var(--ulb-text-muted)' }}>Páginas:</span>
-              <span className="text-sm font-semibold px-3 py-1 rounded-lg text-white" style={{ backgroundColor: 'var(--ulb-primary)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '12px', color: 'var(--ulb-text-muted)' }}>Páginas:</span>
+              <span style={{ 
+                fontSize: isMobile ? '12px' : '13px', 
+                fontWeight: '600', 
+                padding: '4px 8px', 
+                borderRadius: 'var(--radius-md)',
+                color: 'white',
+                backgroundColor: 'var(--ulb-primary)',
+                minWidth: '30px',
+                textAlign: 'center'
+              }}>
                 {project.pages.length}
               </span>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-xs" style={{ color: 'var(--ulb-text-muted)' }}>Tamaño:</span>
-              <span className="text-sm font-semibold px-3 py-1 rounded-lg text-white" style={{ backgroundColor: 'var(--ulb-text)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '12px', color: 'var(--ulb-text-muted)' }}>Tamaño:</span>
+              <span style={{ 
+                fontSize: isMobile ? '12px' : '13px', 
+                fontWeight: '600', 
+                padding: '4px 8px', 
+                borderRadius: 'var(--radius-md)',
+                color: 'white',
+                backgroundColor: 'var(--ulb-text)',
+                minWidth: '50px',
+                textAlign: 'center'
+              }}>
                 {(JSON.stringify(project).length / 1024).toFixed(1)} KB
               </span>
             </div>
@@ -91,9 +155,20 @@ export const MainControls: React.FC = () => {
         </div>
 
         {/* Tip */}
-        <div className="p-4 rounded-lg text-xs sm:text-sm" style={{ backgroundColor: 'rgba(0, 122, 255, 0.08)', borderLeft: '3px solid var(--ulb-primary)' }}>
-          <p style={{ color: 'var(--ulb-text)', margin: 0 }}>
-            <strong>💡 Pro Tip:</strong> Añade múltiples páginas para un mejor eBook
+        <div style={{ 
+          padding: isMobile ? '10px 12px' : '12px 14px', 
+          borderRadius: 'var(--radius-md)',
+          backgroundColor: 'rgba(0, 122, 255, 0.08)',
+          borderLeft: '3px solid var(--ulb-primary)',
+          marginTop: isMobile ? '8px' : '10px'
+        }}>
+          <p style={{ 
+            fontSize: isMobile ? '11px' : '12px', 
+            color: 'var(--ulb-text)',
+            margin: 0,
+            lineHeight: 1.4
+          }}>
+            <strong>💡</strong> {isMobile ? 'Añade múltiples páginas' : 'Añade múltiples páginas para mejor eBook'}
           </p>
         </div>
       </div>

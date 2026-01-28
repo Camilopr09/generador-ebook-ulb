@@ -1,9 +1,11 @@
 import React from 'react'
 import { useProject } from '../context/ProjectContext'
 import { StorageService } from '../services/storageService'
+import { useResponsive } from '../hooks/useResponsive'
 
 export const Header: React.FC = () => {
   const { project } = useProject()
+  const { isMobile } = useResponsive()
 
   const handleSave = async () => {
     if (project) {
@@ -25,28 +27,44 @@ export const Header: React.FC = () => {
       <div style={{ 
         maxWidth: '1280px', 
         margin: '0 auto', 
-        padding: '12px 16px',
+        padding: isMobile ? '10px 12px' : '12px 16px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        gap: '16px',
-        flexWrap: 'wrap'
+        gap: isMobile ? '8px' : '16px',
+        flexWrap: isMobile ? 'wrap' : 'nowrap'
       }}>
         {/* Logo y título */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0, flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
           <img 
             src="https://i.ibb.co/HDcvkJTw/logo.png" 
             alt="Universidad Libre Colombia" 
-            width="40" 
-            height="40"
-            style={{ borderRadius: '8px', objectFit: 'contain' }}
+            width={isMobile ? "36" : "40"}
+            height={isMobile ? "36" : "40"}
+            style={{ borderRadius: '8px', objectFit: 'contain', flexShrink: 0 }}
           />
           <div style={{ minWidth: 0, flex: 1 }}>
-            <h1 style={{ fontSize: '17px', fontWeight: '600', color: 'var(--ulb-text)', margin: 0, letterSpacing: '-0.5px' }}>
-              eBook Generator
+            <h1 style={{ 
+              fontSize: isMobile ? '15px' : '17px', 
+              fontWeight: '600', 
+              color: 'var(--ulb-text)', 
+              margin: 0, 
+              letterSpacing: '-0.5px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
+            }}>
+              {isMobile ? 'eBook' : 'eBook Generator'}
             </h1>
             {project && (
-              <p style={{ fontSize: '12px', color: 'var(--ulb-text-muted)', margin: '2px 0 0 0' }}>
+              <p style={{ 
+                fontSize: isMobile ? '11px' : '12px', 
+                color: 'var(--ulb-text-muted)', 
+                margin: '2px 0 0 0',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap'
+              }}>
                 {project.name}
               </p>
             )}
@@ -55,45 +73,34 @@ export const Header: React.FC = () => {
 
         {/* Acciones */}
         {project && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '8px' : '12px' }}>
             <button
               onClick={handleSave}
               className="apple-button"
               style={{ 
                 color: 'white',
                 backgroundColor: 'var(--ulb-primary)',
-                display: window.innerWidth >= 640 ? 'flex' : 'none'
+                padding: isMobile ? '8px 10px' : '10px 16px',
+                fontSize: isMobile ? '13px' : '15px',
+                minWidth: isMobile ? 'auto' : '100px'
               }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary-hover)'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary)'}
+              title={isMobile ? 'Guardar' : ''}
             >
-              ✓ Guardar
+              {isMobile ? '✓' : '✓ Guardar'}
             </button>
 
-            {/* Botón móvil */}
-            <button
-              onClick={handleSave}
-              className="apple-button"
-              style={{ 
-                padding: '8px 12px',
-                color: 'white',
-                backgroundColor: 'var(--ulb-primary)',
-                display: window.innerWidth >= 640 ? 'none' : 'flex'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary-hover)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary)'}
-            >
-              ✓
-            </button>
-
-            <div style={{ display: window.innerWidth >= 640 ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right', gap: '2px' }}>
-              <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--ulb-primary)' }}>
-                v{project.version}
-              </span>
-              <span style={{ fontSize: '11px', color: 'var(--ulb-text-muted)' }}>
-                {new Date(project.updatedAt).toLocaleDateString()}
-              </span>
-            </div>
+            {!isMobile && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right', gap: '2px' }}>
+                <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--ulb-primary)' }}>
+                  v{project.version}
+                </span>
+                <span style={{ fontSize: '11px', color: 'var(--ulb-text-muted)' }}>
+                  {new Date(project.updatedAt).toLocaleDateString('es-ES', { month: 'short', day: 'numeric' })}
+                </span>
+              </div>
+            )}
           </div>
         )}
       </div>
