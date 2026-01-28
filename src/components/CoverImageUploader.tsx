@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { useProject } from '../context/ProjectContext'
 
 export const CoverImageUploader: React.FC = () => {
-  const { project, updateCoverImage } = useProject()
+  const { project, updateMetadata } = useProject()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [preview, setPreview] = useState<string | null>(project?.metadata.coverImageUrl || null)
   const [uploading, setUploading] = useState(false)
@@ -32,7 +32,7 @@ export const CoverImageUploader: React.FC = () => {
       reader.onload = (event) => {
         const base64String = event.target?.result as string
         setPreview(base64String)
-        updateCoverImage(base64String)
+        updateMetadata({ coverImageUrl: base64String })
       }
       reader.readAsDataURL(file)
     } catch (error) {
@@ -45,15 +45,17 @@ export const CoverImageUploader: React.FC = () => {
 
   const handleRemoveImage = () => {
     setPreview(null)
-    updateCoverImage('')
+    updateMetadata({ coverImageUrl: '' })
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
   return (
-    <div className="space-y-4 p-6 bg-white rounded-lg shadow">
-      <h3 className="text-lg font-bold">Imagen de Portada</h3>
-      
-      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-500 transition">
+    <div className="space-y-4 p-6 rounded-lg shadow" style={{ backgroundColor: 'var(--ulb-surface)' }}>
+      <h3 className="text-lg font-bold" style={{ color: 'var(--ulb-ink)' }}>
+        Imagen de Portada
+      </h3>
+
+      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-500 transition" style={{ borderColor: 'var(--ulb-border)' }}>
         {preview ? (
           <div className="space-y-4">
             <img
@@ -64,13 +66,17 @@ export const CoverImageUploader: React.FC = () => {
             <div className="flex gap-2 justify-center">
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
+                className="px-4 py-2 text-white rounded hover:shadow-lg text-sm font-medium transition"
+                style={{ backgroundColor: 'var(--ulb-primary)' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary-hover)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary)'}
               >
                 Cambiar imagen
               </button>
               <button
                 onClick={handleRemoveImage}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
+                className="px-4 py-2 text-white rounded hover:shadow-lg text-sm font-medium transition"
+                style={{ backgroundColor: 'var(--ulb-error)' }}
               >
                 Eliminar
               </button>
@@ -81,12 +87,12 @@ export const CoverImageUploader: React.FC = () => {
             onClick={() => fileInputRef.current?.click()}
             className="cursor-pointer"
           >
-            <svg className="mx-auto h-12 w-12 text-gray-400 mb-2" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-              <path d="M28 8H12a4 4 0 00-4 4v20a4 4 0 004 4h24a4 4 0 004-4V20m-10-12l6 6m-6-6v12" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-              <circle cx={20} cy={20} r={3} stroke="currentColor" strokeWidth={2} />
-            </svg>
-            <p className="text-gray-600 font-medium">Haz clic para subir una imagen</p>
-            <p className="text-sm text-gray-500 mt-1">PNG, JPG hasta 5MB</p>
+            <p className="text-lg font-medium" style={{ color: 'var(--ulb-text-muted)' }}>
+              Haz clic para subir una imagen
+            </p>
+            <p className="text-sm mt-1" style={{ color: 'var(--ulb-text-muted)' }}>
+              PNG, JPG hasta 5MB
+            </p>
           </div>
         )}
       </div>
@@ -100,8 +106,8 @@ export const CoverImageUploader: React.FC = () => {
         className="hidden"
       />
 
-      <div className="text-sm text-gray-600 space-y-1">
-        <p>💡 <strong>Recomendaciones:</strong></p>
+      <div className="text-sm space-y-1" style={{ color: 'var(--ulb-text-muted)' }}>
+        <p><strong>💡 Recomendaciones:</strong></p>
         <ul className="list-disc ml-5">
           <li>Tamaño mínimo: 600x800px</li>
           <li>Relación de aspecto: 3:4 (ancho:alto)</li>

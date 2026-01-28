@@ -2,14 +2,15 @@ import { Project } from '../context/ProjectContext'
 
 export const StorageService = {
   init: () => {
-    // ...existing code...
+    // Inicializar almacenamiento local
+    console.log('📦 Storage Service inicializado')
   },
 
-  saveProject: (project: Project): void => {
+  saveProject: async (project: Project | null): Promise<void> => {
     try {
+      if (!project) return
       const serialized = JSON.stringify(project)
       localStorage.setItem(`project_${project.id}`, serialized)
-      // Guardar lista de proyectos
       const projectList = StorageService.getProjectList()
       if (!projectList.includes(project.id)) {
         projectList.push(project.id)

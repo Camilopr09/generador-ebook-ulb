@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import './styles/tokens.css';
 
 * {
@@ -15,6 +19,7 @@ body {
   background-color: var(--ulb-bg);
   color: var(--ulb-text);
   line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 button {
@@ -29,6 +34,26 @@ input, textarea, select {
   font-size: inherit;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ulb-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ulb-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ulb-text-muted);
+}
