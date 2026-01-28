@@ -1,0 +1,58 @@
+:root {
+  /* Primary Colors */
+  --ulb-primary: #D61F26;
+  --ulb-primary-hover: #B8181E;
+  
+  /* Ink & Text */
+  --ulb-ink: #111111;
+  
+  /* Accent - Gold */
+  --ulb-gold: #C9A24A;
+  --ulb-gold-hover: #B38B37;
+  
+  /* Base Colors */
+  --ulb-white: #FFFFFF;
+  
+  /* Neutrals */
+  --ulb-bg: #F6F7FB;
+  --ulb-surface: #FFFFFF;
+  --ulb-border: #E6E8F0;
+  
+  /* Text */
+  --ulb-text: #111111;
+  --ulb-text-muted: #667085;
+  
+  /* States */
+  --ulb-error: #D92D20;
+  --ulb-success: #12B76A;
+  --ulb-warning: #F59E0B;
+  
+  /* Dark Mode */
+  --dark-bg: #0B0D12;
+  --dark-surface: #121826;
+  --dark-text: #F2F4F7;
+}
+
+/* Base styles */
+* {
+  border-color: var(--ulb-border);
+}
+
+body {
+  background-color: var(--ulb-bg);
+  color: var(--ulb-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Focus ring ULB */
+:focus-visible {
+  outline: 2px solid var(--ulb-primary);
+  outline-offset: 2px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--ulb-primary);
+  box-shadow: 0 0 0 3px rgba(214, 31, 38, 0.1);
+}

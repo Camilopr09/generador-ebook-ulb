@@ -20,15 +20,20 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--ulb-bg)' }}>
       <Header />
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex gap-4 mb-6 border-b">
+        <div className="flex gap-4 mb-6" style={{ borderBottomColor: 'var(--ulb-border)', borderBottomWidth: '1px' }}>
           {(['overview', 'content', 'theme', 'validate', 'export'] as const).map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 font-medium ${activeTab === tab ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'}`}
+              className="px-4 py-2 font-medium transition"
+              style={{
+                color: activeTab === tab ? 'var(--ulb-primary)' : 'var(--ulb-text-muted)',
+                borderBottomColor: activeTab === tab ? 'var(--ulb-primary)' : 'transparent',
+                borderBottomWidth: activeTab === tab ? '2px' : '0px'
+              }}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
@@ -45,15 +50,19 @@ const AppContent: React.FC = () => {
           </div>
           
           <div className="space-y-4">
-            <div className="p-4 bg-white rounded-lg shadow">
-              <h3 className="font-bold mb-2">📄 Páginas ({project.pages.length})</h3>
+            <div className="p-4 rounded-lg shadow" style={{ backgroundColor: 'var(--ulb-surface)' }}>
+              <h3 className="font-bold mb-2 flex items-center gap-2" style={{ color: 'var(--ulb-ink)' }}>
+                📄 Páginas <span style={{ fontSize: '12px', color: 'var(--ulb-gold)' }}>({project.pages.length})</span>
+              </h3>
               <ul className="space-y-1 text-sm max-h-48 overflow-y-auto">
-                {project.pages.map(p => <li key={p.id} className="text-gray-600">• {p.title}</li>)}
+                {project.pages.map(p => <li key={p.id} className="text-sm" style={{ color: 'var(--ulb-text-muted)' }}>• {p.title}</li>)}
               </ul>
             </div>
-            <div className="p-4 bg-white rounded-lg shadow">
-              <h3 className="font-bold mb-2">🖼️ Assets ({project.assets.length})</h3>
-              <p className="text-sm text-gray-600">Gestor de imágenes y recursos</p>
+            <div className="p-4 rounded-lg shadow" style={{ backgroundColor: 'var(--ulb-surface)' }}>
+              <h3 className="font-bold mb-2 flex items-center gap-2" style={{ color: 'var(--ulb-ink)' }}>
+                🖼️ Assets <span style={{ fontSize: '12px', color: 'var(--ulb-gold)' }}>({project.assets.length})</span>
+              </h3>
+              <p className="text-sm" style={{ color: 'var(--ulb-text-muted)' }}>Gestor de imágenes y recursos</p>
             </div>
           </div>
         </div>
