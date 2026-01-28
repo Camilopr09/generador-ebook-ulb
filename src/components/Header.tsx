@@ -10,24 +10,25 @@ export const Header: React.FC = () => {
   const handleSave = async () => {
     if (project) {
       await StorageService.saveProject(project)
-      alert('✅ Guardado')
+      alert('✅ Guardado perfectamente')
     }
   }
 
   return (
     <header style={{ 
       backgroundColor: 'var(--ulb-surface)',
-      borderBottom: '1px solid var(--ulb-border-subtle)',
+      borderBottom: '1px solid var(--ulb-border)',
       position: 'sticky',
       top: 0,
       zIndex: 50,
       backdropFilter: 'blur(20px)',
-      background: 'rgba(255, 255, 255, 0.95)'
+      background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
+      boxShadow: '0 4px 20px rgba(15, 23, 42, 0.06)'
     }}>
       <div style={{ 
         maxWidth: '1280px', 
         margin: '0 auto', 
-        padding: isMobile ? '10px 12px' : '12px 16px',
+        padding: isMobile ? '10px 12px' : '14px 20px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -35,18 +36,27 @@ export const Header: React.FC = () => {
         flexWrap: isMobile ? 'wrap' : 'nowrap'
       }}>
         {/* Logo y título */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
-          <img 
-            src="https://i.ibb.co/HDcvkJTw/logo.png" 
-            alt="Universidad Libre Colombia" 
-            width={isMobile ? "36" : "40"}
-            height={isMobile ? "36" : "40"}
-            style={{ borderRadius: '8px', objectFit: 'contain', flexShrink: 0 }}
-          />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flex: 1 }}>
+          <div style={{
+            width: isMobile ? "40px" : "44px",
+            height: isMobile ? "40px" : "44px",
+            borderRadius: '12px',
+            background: 'var(--ulb-primary-gradient)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: '18px',
+            boxShadow: '0 8px 16px rgba(99, 102, 241, 0.3)',
+            flexShrink: 0
+          }}>
+            📖
+          </div>
           <div style={{ minWidth: 0, flex: 1 }}>
             <h1 style={{ 
-              fontSize: isMobile ? '15px' : '17px', 
-              fontWeight: '600', 
+              fontSize: isMobile ? '16px' : '18px', 
+              fontWeight: '700', 
               color: 'var(--ulb-text)', 
               margin: 0, 
               letterSpacing: '-0.5px',
@@ -54,7 +64,7 @@ export const Header: React.FC = () => {
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap'
             }}>
-              {isMobile ? 'eBook' : 'eBook Generator'}
+              {isMobile ? 'eBook Pro' : 'eBook Generator Pro'}
             </h1>
             {project && (
               <p style={{ 
@@ -63,7 +73,8 @@ export const Header: React.FC = () => {
                 margin: '2px 0 0 0',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
+                whiteSpace: 'nowrap',
+                fontWeight: '500'
               }}>
                 {project.name}
               </p>
@@ -78,25 +89,24 @@ export const Header: React.FC = () => {
               onClick={handleSave}
               className="apple-button"
               style={{ 
+                padding: isMobile ? '8px 12px' : '10px 18px',
+                fontSize: isMobile ? '13px' : '14px',
+                minWidth: isMobile ? 'auto' : '120px',
+                background: 'var(--ulb-primary-gradient)',
                 color: 'white',
-                backgroundColor: 'var(--ulb-primary)',
-                padding: isMobile ? '8px 10px' : '10px 16px',
-                fontSize: isMobile ? '13px' : '15px',
-                minWidth: isMobile ? 'auto' : '100px'
+                fontWeight: '600'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary-hover)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary)'}
               title={isMobile ? 'Guardar' : ''}
             >
-              {isMobile ? '✓' : '✓ Guardar'}
+              {isMobile ? '💾' : '✓ Guardar'}
             </button>
 
             {!isMobile && (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right', gap: '2px' }}>
-                <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--ulb-primary)' }}>
+                <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--ulb-primary)' }}>
                   v{project.version}
                 </span>
-                <span style={{ fontSize: '11px', color: 'var(--ulb-text-muted)' }}>
+                <span style={{ fontSize: '11px', color: 'var(--ulb-text-muted)', fontWeight: '500' }}>
                   {new Date(project.updatedAt).toLocaleDateString('es-ES', { month: 'short', day: 'numeric' })}
                 </span>
               </div>

@@ -1,36 +1,48 @@
 :root {
-  /* Primary Colors - Apple Style */
-  --ulb-primary: #007AFF;
-  --ulb-primary-hover: #0051D5;
+  /* Premium Gradient Colors */
+  --ulb-primary: #6366F1;
+  --ulb-primary-hover: #4F46E5;
+  --ulb-primary-light: #E0E7FF;
+  --ulb-primary-gradient: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  
+  /* Secondary Accent */
+  --ulb-accent: #EC4899;
+  --ulb-accent-hover: #DB2777;
+  --ulb-accent-light: #FCE7F3;
   
   /* Text & Ink */
-  --ulb-ink: #000000;
+  --ulb-ink: #0F172A;
   
-  /* Accent - Silver */
-  --ulb-gold: #A2845E;
-  --ulb-gold-hover: #8B6F47;
+  /* Accent - Premium Gold */
+  --ulb-gold: #D4AF37;
+  --ulb-gold-hover: #C49A1F;
+  --ulb-gold-light: #FEF3C7;
   
   /* Base Colors */
   --ulb-white: #FFFFFF;
   
-  /* Neutrals - Apple Gray */
-  --ulb-bg: #F5F5F7;
+  /* Neutrals - Premium Gray */
+  --ulb-bg: #F8FAFC;
   --ulb-surface: #FFFFFF;
-  --ulb-border: #D2D2D7;
-  --ulb-border-subtle: #E8E8ED;
+  --ulb-border: #E2E8F0;
+  --ulb-border-subtle: #F1F5F9;
   
   /* Text */
-  --ulb-text: #000000;
-  --ulb-text-muted: #86868B;
-  --ulb-text-light: #A1A1A6;
+  --ulb-text: #1E293B;
+  --ulb-text-muted: #64748B;
+  --ulb-text-light: #94A3B8;
   
   /* States */
-  --ulb-error: #FF3B30;
-  --ulb-success: #34C759;
-  --ulb-warning: #FF9500;
+  --ulb-error: #EF4444;
+  --ulb-success: #10B981;
+  --ulb-warning: #F59E0B;
   
   /* Special */
-  --ulb-secondary: #F5F5F7;
+  --ulb-secondary: #F1F5F9;
+  --ulb-shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --ulb-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.1);
+  --ulb-shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1);
+  --ulb-shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1);
   
   /* Responsive Spacing */
   --spacing-xs: 4px;

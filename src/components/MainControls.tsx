@@ -7,6 +7,8 @@ export const MainControls: React.FC = () => {
   const { project, addPage } = useProject()
   const { isMobile, isTablet } = useResponsive()
   const [generating, setGenerating] = useState(false)
+  const [hoverAddPage, setHoverAddPage] = useState(false)
+  const [hoverDownload, setHoverDownload] = useState(false)
 
   if (!project) return null
 
@@ -38,115 +40,197 @@ export const MainControls: React.FC = () => {
     }
   }
 
-  const padding = isMobile ? '12px 14px' : isTablet ? '14px 16px' : '16px 18px'
-  const gap = isMobile ? '10px' : '12px'
-  const buttonPadding = isMobile ? '10px 12px' : '12px 16px'
+  const padding = isMobile ? '14px 16px' : isTablet ? '16px 18px' : '18px 20px'
+  const gap = isMobile ? '12px' : '14px'
+  const buttonPadding = isMobile ? '11px 14px' : '13px 18px'
 
   return (
-    <div className="apple-card" style={{ padding }}>
+    <div className="apple-card" style={{ padding, position: 'relative', overflow: 'hidden' }}>
+      {/* Decorative gradient background */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        width: '120px',
+        height: '120px',
+        background: 'radial-gradient(circle, rgba(236, 72, 153, 0.05) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none'
+      }} />
+      
       <div style={{ 
-        paddingBottom: isMobile ? '10px' : '12px', 
-        borderBottomWidth: '1px', 
-        borderBottomColor: 'var(--ulb-border-subtle)',
-        marginBottom: isMobile ? '12px' : '14px'
+        paddingBottom: isMobile ? '12px' : '14px', 
+        borderBottomWidth: '1.5px', 
+        borderBottomColor: 'rgba(99, 102, 241, 0.1)',
+        marginBottom: isMobile ? '14px' : '16px',
+        position: 'relative',
+        zIndex: 1
       }}>
         <h2 style={{ 
-          fontSize: isMobile ? '15px' : '16px', 
-          fontWeight: '600',
-          color: 'var(--ulb-text)',
+          fontSize: isMobile ? '16px' : '17px', 
+          fontWeight: '700',
+          background: 'var(--ulb-primary-gradient)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
           margin: 0
         }}>
-          Controles
+          ✨ Controles de Proyecto
         </h2>
         <p style={{ 
           fontSize: isMobile ? '12px' : '13px', 
           color: 'var(--ulb-text-muted)', 
-          margin: '3px 0 0 0'
+          margin: '4px 0 0 0',
+          fontWeight: '500'
         }}>
-          {isMobile ? 'Gestión' : 'Gestiona tu proyecto'}
+          {isMobile ? 'Gestiona tu obra' : 'Herramientas para gestionar tu obra maestra'}
         </p>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap, position: 'relative', zIndex: 1 }}>
+        {/* Add Page Button - Indigo Gradient */}
         <button
           onClick={handleAddPage}
+          onMouseEnter={() => setHoverAddPage(true)}
+          onMouseLeave={() => setHoverAddPage(false)}
           className="apple-button"
           style={{ 
-            backgroundColor: 'var(--ulb-primary)',
+            background: hoverAddPage 
+              ? 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)' 
+              : 'linear-gradient(135deg, #6366F1 0%, #7C3AED 100%)',
             color: 'white',
-            fontWeight: 'medium',
+            fontWeight: '700',
             padding: buttonPadding,
-            fontSize: isMobile ? '13px' : '14px',
-            width: '100%'
+            fontSize: isMobile ? '14px' : '15px',
+            width: '100%',
+            border: 'none',
+            borderRadius: '12px',
+            cursor: 'pointer',
+            boxShadow: hoverAddPage 
+              ? '0 12px 24px rgba(99, 102, 241, 0.35)' 
+              : '0 8px 16px rgba(99, 102, 241, 0.25)',
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            transform: hoverAddPage ? 'translateY(-2px)' : 'translateY(0)',
+            position: 'relative',
+            overflow: 'hidden'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary-hover)'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary)'}
         >
-          {isMobile ? '+ Página' : '+ Nueva Página'}
+          <span style={{ position: 'relative', zIndex: 2 }}>
+            {isMobile ? '📄 Página' : '📄 Nueva Página'}
+          </span>
+          {/* Shine effect overlay */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: '-100%',
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
+            animation: hoverAddPage ? 'shimmer 0.6s' : 'none'
+          }} />
         </button>
 
+        {/* Download EPUB Button - Pink Gradient */}
         <button
           onClick={handleGenerate}
           disabled={generating}
+          onMouseEnter={() => setHoverDownload(true)}
+          onMouseLeave={() => setHoverDownload(false)}
           className="apple-button"
           style={{ 
-            backgroundColor: 'var(--ulb-text)',
+            background: generating 
+              ? 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)'
+              : hoverDownload
+              ? 'linear-gradient(135deg, #EC4899 0%, #F43F5E 100%)'
+              : 'linear-gradient(135deg, #EC4899 0%, #E11D48 100%)',
             color: 'white',
-            fontWeight: 'medium',
+            fontWeight: '700',
             padding: buttonPadding,
-            fontSize: isMobile ? '13px' : '14px',
+            fontSize: isMobile ? '14px' : '15px',
             width: '100%',
-            opacity: generating ? 0.5 : 1,
-            cursor: generating ? 'not-allowed' : 'pointer'
+            border: 'none',
+            borderRadius: '12px',
+            cursor: generating ? 'not-allowed' : 'pointer',
+            boxShadow: generating
+              ? '0 8px 16px rgba(236, 72, 153, 0.2)'
+              : hoverDownload
+              ? '0 12px 24px rgba(236, 72, 153, 0.35)'
+              : '0 8px 16px rgba(236, 72, 153, 0.25)',
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            transform: !generating && hoverDownload ? 'translateY(-2px)' : 'translateY(0)',
+            opacity: generating ? 0.85 : 1,
+            position: 'relative',
+            overflow: 'hidden'
           }}
-          onMouseEnter={(e) => !generating && (e.currentTarget.style.backgroundColor = '#333333')}
-          onMouseLeave={(e) => !generating && (e.currentTarget.style.backgroundColor = 'var(--ulb-text)')}
         >
-          {generating ? '⏳ Generando...' : isMobile ? '⬇ EPUB' : '⬇ Descargar EPUB'}
+          <span style={{ position: 'relative', zIndex: 2 }}>
+            {generating ? '⏳ Generando eBook...' : isMobile ? '📥 EPUB' : '📥 Descargar EPUB'}
+          </span>
+          {/* Shine effect overlay */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: '-100%',
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
+            animation: !generating && hoverDownload ? 'shimmer 0.6s' : 'none'
+          }} />
         </button>
 
-        {/* Stats */}
+        {/* Premium Stats Card */}
         <div style={{ 
-          padding: isMobile ? '10px 12px' : '12px 14px', 
-          borderRadius: 'var(--radius-lg)',
-          backgroundColor: 'var(--ulb-secondary)',
-          marginTop: isMobile ? '8px' : '10px'
+          padding: isMobile ? '12px 14px' : '14px 16px', 
+          borderRadius: '12px',
+          background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(236, 72, 153, 0.05) 100%)',
+          border: '1.5px solid rgba(99, 102, 241, 0.15)',
+          marginTop: isMobile ? '10px' : '12px',
+          boxShadow: '0 4px 12px rgba(99, 102, 241, 0.08)'
         }}>
           <p style={{ 
-            fontSize: isMobile ? '11px' : '12px', 
-            fontWeight: '600',
-            color: 'var(--ulb-text)',
-            margin: '0 0 8px 0'
+            fontSize: isMobile ? '12px' : '13px', 
+            fontWeight: '700',
+            background: 'var(--ulb-primary-gradient)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            margin: '0 0 10px 0'
           }}>
-            Estado
+            📊 Estado del Proyecto
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '12px', color: 'var(--ulb-text-muted)' }}>Páginas:</span>
+              <span style={{ fontSize: isMobile ? '12px' : '13px', color: 'var(--ulb-text-muted)', fontWeight: '600' }}>
+                Páginas:
+              </span>
               <span style={{ 
-                fontSize: isMobile ? '12px' : '13px', 
-                fontWeight: '600', 
-                padding: '4px 8px', 
-                borderRadius: 'var(--radius-md)',
+                fontSize: isMobile ? '13px' : '14px', 
+                fontWeight: '700', 
+                padding: '5px 10px', 
+                borderRadius: '8px',
+                background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
                 color: 'white',
-                backgroundColor: 'var(--ulb-primary)',
-                minWidth: '30px',
-                textAlign: 'center'
+                minWidth: '35px',
+                textAlign: 'center',
+                boxShadow: '0 4px 8px rgba(99, 102, 241, 0.25)'
               }}>
                 {project.pages.length}
               </span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '12px', color: 'var(--ulb-text-muted)' }}>Tamaño:</span>
+              <span style={{ fontSize: isMobile ? '12px' : '13px', color: 'var(--ulb-text-muted)', fontWeight: '600' }}>
+                Tamaño:
+              </span>
               <span style={{ 
-                fontSize: isMobile ? '12px' : '13px', 
-                fontWeight: '600', 
-                padding: '4px 8px', 
-                borderRadius: 'var(--radius-md)',
+                fontSize: isMobile ? '13px' : '14px', 
+                fontWeight: '700', 
+                padding: '5px 10px', 
+                borderRadius: '8px',
+                background: 'linear-gradient(135deg, #EC4899 0%, #F43F5E 100%)',
                 color: 'white',
-                backgroundColor: 'var(--ulb-text)',
-                minWidth: '50px',
-                textAlign: 'center'
+                minWidth: '55px',
+                textAlign: 'center',
+                boxShadow: '0 4px 8px rgba(236, 72, 153, 0.25)'
               }}>
                 {(JSON.stringify(project).length / 1024).toFixed(1)} KB
               </span>
@@ -154,24 +238,39 @@ export const MainControls: React.FC = () => {
           </div>
         </div>
 
-        {/* Tip */}
+        {/* Premium Tip Section */}
         <div style={{ 
-          padding: isMobile ? '10px 12px' : '12px 14px', 
-          borderRadius: 'var(--radius-md)',
-          backgroundColor: 'rgba(0, 122, 255, 0.08)',
-          borderLeft: '3px solid var(--ulb-primary)',
-          marginTop: isMobile ? '8px' : '10px'
+          padding: isMobile ? '12px 14px' : '14px 16px', 
+          borderRadius: '12px',
+          background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.03) 100%)',
+          border: '1.5px solid rgba(212, 175, 55, 0.15)',
+          marginTop: isMobile ? '10px' : '12px',
+          boxShadow: '0 4px 12px rgba(212, 175, 55, 0.06)',
+          position: 'relative'
         }}>
           <p style={{ 
-            fontSize: isMobile ? '11px' : '12px', 
+            fontSize: isMobile ? '12px' : '13px', 
             color: 'var(--ulb-text)',
             margin: 0,
-            lineHeight: 1.4
+            lineHeight: 1.5,
+            fontWeight: '600'
           }}>
-            <strong>💡</strong> {isMobile ? 'Añade múltiples páginas' : 'Añade múltiples páginas para mejor eBook'}
+            <span style={{ fontSize: '16px', marginRight: '6px' }}>💡</span>
+            {isMobile ? 'Crea múltiples páginas para un eBook destacado' : '✨ Pro Tip: Añade múltiples páginas con contenido variado para crear un eBook profesional y atractivo'}
           </p>
         </div>
       </div>
+
+      <style>{`
+        @keyframes shimmer {
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 100%;
+          }
+        }
+      `}</style>
     </div>
   )
 }
