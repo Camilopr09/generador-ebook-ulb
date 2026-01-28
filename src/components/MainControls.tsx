@@ -37,56 +37,60 @@ export const MainControls: React.FC = () => {
   }
 
   return (
-    <div className="rounded-lg shadow-xl p-6 space-y-4 h-fit" style={{ backgroundColor: 'var(--ulb-surface)', borderTop: '4px solid var(--ulb-primary)' }}>
-      <div className="pb-4" style={{ borderBottomWidth: '2px', borderBottomColor: 'var(--ulb-border)' }}>
-        <h2 className="text-xl font-bold flex items-center gap-2" style={{ color: 'var(--ulb-ink)' }}>
+    <div className="apple-card bg-white p-4 sm:p-6 h-fit" style={{ borderColor: 'var(--ulb-border)', borderTopWidth: '2px', borderTopColor: 'var(--ulb-primary)' }}>
+      <div className="pb-4 sm:pb-6" style={{ borderBottomWidth: '1px', borderBottomColor: 'var(--ulb-border)' }}>
+        <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2" style={{ color: 'var(--ulb-ink)' }}>
           <span>⚙️</span> Controles
         </h2>
       </div>
 
-      <button
-        onClick={handleAddPage}
-        className="w-full text-white py-3 rounded-lg font-bold transition hover:shadow-lg"
-        style={{ backgroundColor: 'var(--ulb-primary)' }}
-        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary-hover)'}
-        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary)'}
-      >
-        ➕ Nueva Página
-      </button>
+      <div className="space-y-3 pt-4 sm:pt-6">
+        <button
+          onClick={handleAddPage}
+          className="apple-button w-full text-white font-semibold py-3"
+          style={{ backgroundColor: 'var(--ulb-primary)' }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary-hover)'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--ulb-primary)'}
+        >
+          ➕ Nueva Página
+        </button>
 
-      <button
-        onClick={handleGenerate}
-        disabled={generating}
-        className="w-full text-white py-3 rounded-lg font-bold transition hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
-        style={{ backgroundColor: 'var(--ulb-ink)', borderLeft: '3px solid var(--ulb-gold)' }}
-        onMouseEnter={(e) => !generating && (e.currentTarget.style.backgroundColor = 'var(--ulb-primary)')}
-        onMouseLeave={(e) => !generating && (e.currentTarget.style.backgroundColor = 'var(--ulb-ink)')}
-      >
-        {generating ? '⏳ Generando...' : '📚 Generar E-Libro EPUB'}
-      </button>
+        <button
+          onClick={handleGenerate}
+          disabled={generating}
+          className="apple-button w-full text-white font-semibold py-3 disabled:opacity-60 disabled:cursor-not-allowed"
+          style={{ backgroundColor: 'var(--ulb-ink)', borderLeft: '3px solid var(--ulb-gold)' }}
+          onMouseEnter={(e) => !generating && (e.currentTarget.style.backgroundColor = 'var(--ulb-primary)')}
+          onMouseLeave={(e) => !generating && (e.currentTarget.style.backgroundColor = 'var(--ulb-ink)')}
+        >
+          {generating ? '⏳ Generando...' : '📚 Generar EPUB'}
+        </button>
 
-      <div className="p-4 rounded-lg mt-6" style={{ backgroundColor: 'rgba(214, 31, 38, 0.05)', borderWidth: '2px', borderColor: 'var(--ulb-gold)' }}>
-        <p className="text-sm font-semibold mb-3" style={{ color: 'var(--ulb-ink)' }}>
-          📊 Estado del Proyecto
-        </p>
-        <div className="space-y-2">
-          <div className="flex justify-between items-center">
-            <span style={{ color: 'var(--ulb-text-muted)' }}>Páginas:</span>
-            <span className="font-bold px-3 py-1 rounded text-white" style={{ backgroundColor: 'var(--ulb-primary)' }}>
-              {project.pages.length}
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span style={{ color: 'var(--ulb-text-muted)' }}>Tamaño:</span>
-            <span className="font-bold px-3 py-1 rounded text-white" style={{ backgroundColor: 'var(--ulb-ink)' }}>
-              {(JSON.stringify(project).length / 1024).toFixed(2)} KB
-            </span>
+        {/* Stats */}
+        <div className="p-4 sm:p-5 rounded-2xl mt-4 sm:mt-6" style={{ backgroundColor: 'rgba(214, 31, 38, 0.05)', borderColor: 'var(--ulb-gold)', borderWidth: '1px' }}>
+          <p className="text-xs sm:text-sm font-semibold mb-3" style={{ color: 'var(--ulb-ink)' }}>
+            📊 Estado
+          </p>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="text-xs" style={{ color: 'var(--ulb-text-muted)' }}>Páginas:</span>
+              <span className="text-sm font-bold px-3 py-1 rounded-lg text-white" style={{ backgroundColor: 'var(--ulb-primary)' }}>
+                {project.pages.length}
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-xs" style={{ color: 'var(--ulb-text-muted)' }}>Tamaño:</span>
+              <span className="text-sm font-bold px-3 py-1 rounded-lg text-white" style={{ backgroundColor: 'var(--ulb-ink)' }}>
+                {(JSON.stringify(project).length / 1024).toFixed(1)} KB
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="p-3 rounded-lg text-xs" style={{ backgroundColor: 'var(--ulb-ink)', color: 'var(--ulb-white)', borderLeft: '4px solid var(--ulb-gold)' }}>
-        <p><strong>💡 Tip:</strong> Crea múltiples páginas antes de generar el e-libro</p>
+        {/* Tip */}
+        <div className="p-3 sm:p-4 rounded-xl text-xs sm:text-sm" style={{ backgroundColor: 'var(--ulb-ink)', color: 'var(--ulb-white)', borderLeft: '3px solid var(--ulb-gold)' }}>
+          <p><strong>💡 Tip:</strong> Crea múltiples páginas antes de generar</p>
+        </div>
       </div>
     </div>
   )

@@ -19,10 +19,10 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--ulb-bg)' }}>
       <Header />
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Grid superior: CoverDesigner (2 columnas) + MainControls (1 columna) */}
-        <div className="grid grid-cols-3 gap-6 mb-6">
-          <div className="col-span-2">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        {/* Grid: responsive (1 columna en móvil, 3 en desktop) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-6">
+          <div className="lg:col-span-2">
             <CoverDesigner />
           </div>
           <div>
@@ -30,8 +30,8 @@ const AppContent: React.FC = () => {
           </div>
         </div>
 
-        {/* Grid inferior: PageDesigner a altura fija */}
-        <div style={{ height: '384px' }}>
+        {/* PageDesigner: altura adaptativa */}
+        <div className="min-h-96 sm:h-96 lg:h-96">
           <PageDesigner />
         </div>
       </main>
