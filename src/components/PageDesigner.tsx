@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useProject } from '../context/ProjectContext'
 
 export const PageDesigner: React.FC = () => {
-  const { project } = useProject()
+  const { project, updatePage } = useProject()
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   // Actualizar selectedId cuando cambian las páginas
@@ -67,9 +67,7 @@ export const PageDesigner: React.FC = () => {
             <input
               type="text"
               value={page.title}
-              onChange={(e) => {
-                // Aquí iría la actualización
-              }}
+              onChange={(e) => updatePage(page.id, { title: e.target.value })}
               className="w-full px-3 py-2 border rounded mb-4 focus:outline-none"
               style={{ borderColor: 'var(--ulb-border)' }}
             />
@@ -86,8 +84,12 @@ export const PageDesigner: React.FC = () => {
                 <div className="space-y-2">
                   {page.elements.map((el) => (
                     <div key={el.id} className="p-2 rounded" style={{ backgroundColor: 'var(--ulb-surface)', borderLeft: `3px solid var(--ulb-primary)` }}>
-                      <p className="text-xs font-semibold" style={{ color: 'var(--ulb-primary)' }}>{el.type.toUpperCase()}</p>
-                      <p style={{ color: 'var(--ulb-text)' }}>{el.content.substring(0, 100)}</p>
+                      <p className="text-xs font-semibold" style={{ color: 'var(--ulb-primary)' }}>
+                        {el.type.toUpperCase()}
+                      </p>
+                      <p style={{ color: 'var(--ulb-text)' }}>
+                        {el.content.substring(0, 100)}
+                      </p>
                     </div>
                   ))}
                 </div>
