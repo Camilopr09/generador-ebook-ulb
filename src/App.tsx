@@ -17,12 +17,17 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--ulb-bg)' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--ulb-bg)' }}>
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
-        {/* Grid: responsive (1 columna en móvil, 3 en desktop) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-6">
-          <div className="lg:col-span-2">
+      <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '16px' }}>
+        {/* Grid superior: CoverDesigner + MainControls */}
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '24px',
+          marginBottom: '24px'
+        }}>
+          <div style={{ gridColumn: window.innerWidth >= 1024 ? 'span 2' : 'auto' }}>
             <CoverDesigner />
           </div>
           <div>
@@ -30,8 +35,8 @@ const AppContent: React.FC = () => {
           </div>
         </div>
 
-        {/* PageDesigner: altura adaptativa */}
-        <div className="min-h-96 sm:h-96 lg:h-96">
+        {/* PageDesigner */}
+        <div style={{ minHeight: '384px' }}>
           <PageDesigner />
         </div>
       </main>
