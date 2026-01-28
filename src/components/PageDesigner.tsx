@@ -319,14 +319,14 @@ export const PageDesigner: React.FC = () => {
                     marginTop: '14px',
                     padding: '12px 12px',
                     borderRadius: '8px',
-                    background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
-                    color: 'white',
-                    border: 'none',
-                    fontWeight: '700',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)'
+                  background: 'linear-gradient(135deg, #DC2626 0%, #991B1B 100%)',
+                  color: 'white',
+                  border: 'none',
+                  fontWeight: '700',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  boxShadow: '0 4px 12px rgba(220, 38, 38, 0.3)'
                   }}
                   onMouseOver={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)'

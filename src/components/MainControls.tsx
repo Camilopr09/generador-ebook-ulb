@@ -96,8 +96,8 @@ export const MainControls: React.FC = () => {
           className="apple-button"
           style={{ 
             background: hoverAddPage 
-              ? 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)' 
-              : 'linear-gradient(135deg, #6366F1 0%, #7C3AED 100%)',
+              ? 'linear-gradient(135deg, #DC2626 0%, #991B1B 100%)' 
+              : 'linear-gradient(135deg, #DC2626 0%, #7F1D1D 100%)',
             color: 'white',
             fontWeight: '700',
             padding: buttonPadding,
@@ -139,10 +139,10 @@ export const MainControls: React.FC = () => {
           className="apple-button"
           style={{ 
             background: generating 
-              ? 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)'
+              ? 'linear-gradient(135deg, #000000 0%, #1F2937 100%)'
               : hoverDownload
-              ? 'linear-gradient(135deg, #EC4899 0%, #F43F5E 100%)'
-              : 'linear-gradient(135deg, #EC4899 0%, #E11D48 100%)',
+              ? 'linear-gradient(135deg, #000000 0%, #111827 100%)'
+              : 'linear-gradient(135deg, #000000 0%, #0F172A 100%)',
             color: 'white',
             fontWeight: '700',
             padding: buttonPadding,
@@ -208,11 +208,11 @@ export const MainControls: React.FC = () => {
                 fontWeight: '700', 
                 padding: '5px 10px', 
                 borderRadius: '8px',
-                background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
+                background: 'linear-gradient(135deg, #DC2626 0%, #991B1B 100%)',
                 color: 'white',
                 minWidth: '35px',
                 textAlign: 'center',
-                boxShadow: '0 4px 8px rgba(99, 102, 241, 0.25)'
+                boxShadow: '0 4px 8px rgba(220, 38, 38, 0.25)'
               }}>
                 {project.pages.length}
               </span>
@@ -226,11 +226,11 @@ export const MainControls: React.FC = () => {
                 fontWeight: '700', 
                 padding: '5px 10px', 
                 borderRadius: '8px',
-                background: 'linear-gradient(135deg, #EC4899 0%, #F43F5E 100%)',
+                background: 'linear-gradient(135deg, #000000 0%, #1F2937 100%)',
                 color: 'white',
-                minWidth: '55px',
+                minWidth: '35px',
                 textAlign: 'center',
-                boxShadow: '0 4px 8px rgba(236, 72, 153, 0.25)'
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25)'
               }}>
                 {(JSON.stringify(project).length / 1024).toFixed(1)} KB
               </span>
