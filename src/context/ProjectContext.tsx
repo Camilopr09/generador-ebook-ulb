@@ -98,6 +98,7 @@ interface ProjectContextType {
   addAsset: (asset: AssetReference) => void
   removeAsset: (assetId: string) => void
   addChangelog: (changes: string[]) => void
+  updateCoverImage: (imageUrl: string) => void
 }
 
 const ProjectContext = createContext<ProjectContextType | undefined>(undefined)
@@ -234,6 +235,12 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   }
 
+  const updateCoverImage = (imageUrl: string) => {
+    if (project) {
+      updateMetadata({ coverImageUrl: imageUrl })
+    }
+  }
+
   return (
     <ProjectContext.Provider value={{
       project,
@@ -246,7 +253,8 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       updateTheme,
       addAsset,
       removeAsset,
-      addChangelog
+      addChangelog,
+      updateCoverImage
     }}>
       {children}
     </ProjectContext.Provider>

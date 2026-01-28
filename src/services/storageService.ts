@@ -1,32 +1,52 @@
-import {Project} from '../context/ProjectContext'
+import { Project } from '../context/ProjectContext'
 
-const DB_NAME = 'ulb-ebook-db'
-const STORE_NAME = 'projects'
+export const StorageService = {
+  init: () => {
+    // ...existing code...
+  },
 
-export class StorageService {
-  private static instance: IDBDatabase | null = null
-
-  static async init(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME, 1)
-      request.onerror = () => reject(request.error)
-      request.onsuccess = () => {this.instance = request.result; resolve()}
-      request.onupgradeneeded = (e) => {
-        const db = (e.target as IDBOpenDBRequest).result
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-          db.createObjectStore(STORE_NAME, {keyPath: 'id'})
-        }
+  saveProject: (project: Project): void => {
+    try {
+      const serialized = JSON.stringify(project)
+      localStorage.setItem(`project_${project.id}`, serialized)
+      // Guardar lista de proyectos
+      const projectList = StorageService.getProjectList()
+      if (!projectList.includes(project.id)) {
+        projectList.push(project.id)
+        localStorage.setItem('project_list', JSON.stringify(projectList))
       }
-    })
-  }
+    } catch (error) {
+      console.error('Error guardando proyecto:', error)
+    }
+  },
 
-  static async saveProject(project: Project): Promise<void> {
-    if (!this.instance) await this.init()
-    return new Promise((resolve, reject) => {
-      const tx = this.instance!.transaction(STORE_NAME, 'readwrite')
-      const request = tx.objectStore(STORE_NAME).put(project)
-      request.onerror = () => reject(request.error)
-      request.onsuccess = () => resolve()
-    })
+  loadProject: (projectId: string): Project | null => {
+    try {
+      const data = localStorage.getItem(`project_${projectId}`)
+      return data ? JSON.parse(data) : null
+    } catch (error) {
+      console.error('Error cargando proyecto:', error)
+      return null
+    }
+  },
+
+  getProjectList: (): string[] => {
+    try {
+      const list = localStorage.getItem('project_list')
+      return list ? JSON.parse(list) : []
+    } catch {
+      return []
+    }
+  },
+
+  deleteProject: (projectId: string): void => {
+    try {
+      localStorage.removeItem(`project_${projectId}`)
+      const projectList = StorageService.getProjectList()
+      const filtered = projectList.filter(id => id !== projectId)
+      localStorage.setItem('project_list', JSON.stringify(filtered))
+    } catch (error) {
+      console.error('Error eliminando proyecto:', error)
+    }
   }
 }
