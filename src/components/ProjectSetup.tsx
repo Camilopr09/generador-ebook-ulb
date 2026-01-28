@@ -67,7 +67,7 @@ export const ProjectSetup: React.FC = () => {
           <h1 style={{ 
             fontSize: isMobile ? '28px' : '36px', 
             fontWeight: '800',
-            background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%)',
+            background: 'linear-gradient(135deg, #DC2626 0%, #991B1B 50%, #000000 100%)',
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -90,7 +90,7 @@ export const ProjectSetup: React.FC = () => {
           <div style={{
             height: '3px',
             width: '80px',
-            background: 'linear-gradient(90deg, #6366F1, #EC4899, #D4AF37)',
+            background: 'linear-gradient(90deg, #DC2626, #000000, #FFFFFF)',
             borderRadius: '2px',
             margin: '20px auto 0'
           }} />
@@ -154,7 +154,7 @@ export const ProjectSetup: React.FC = () => {
               fontSize: isMobile ? '14px' : '15px',
               fontWeight: '700',
               marginBottom: '14px',
-              background: 'linear-gradient(90deg, #6366F1, #EC4899)',
+              background: 'linear-gradient(90deg, #DC2626, #000000)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
@@ -177,12 +177,12 @@ export const ProjectSetup: React.FC = () => {
                     padding: isMobile ? '14px 16px' : '16px 18px',
                     borderRadius: '12px',
                     border: selectedTemplate === template.id 
-                      ? '2px solid #6366F1'
-                      : '2px solid rgba(99, 102, 241, 0.2)',
+                      ? '2px solid #DC2626'
+                      : '2px solid rgba(220, 38, 38, 0.2)',
                     background: selectedTemplate === template.id
-                      ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%)'
+                      ? 'linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, rgba(153, 27, 27, 0.05) 100%)'
                       : hoveredTemplate === template.id
-                      ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.04) 0%, rgba(236, 72, 153, 0.02) 100%)'
+                      ? 'linear-gradient(135deg, rgba(220, 38, 38, 0.04) 0%, rgba(0, 0, 0, 0.02) 100%)'
                       : 'rgba(255, 255, 255, 0.5)',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -229,7 +229,7 @@ export const ProjectSetup: React.FC = () => {
                         width: '24px',
                         height: '24px',
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #6366F1 0%, #EC4899 100%)',
+                        background: 'linear-gradient(135deg, #DC2626 0%, #000000 100%)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -257,12 +257,12 @@ export const ProjectSetup: React.FC = () => {
                 padding: isMobile ? '14px 24px' : '16px 48px',
                 fontSize: isMobile ? '15px' : '16px',
                 fontWeight: '700',
-                background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%)',
+                background: 'linear-gradient(135deg, #DC2626 0%, #991B1B 50%, #000000 100%)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '12px',
                 cursor: creating ? 'not-allowed' : 'pointer',
-                boxShadow: '0 16px 32px rgba(99, 102, 241, 0.3)',
+                boxShadow: '0 16px 32px rgba(220, 38, 38, 0.3)',
                 transition: 'all 0.3s ease',
                 transform: creating ? 'scale(0.98)' : 'scale(1)',
                 opacity: creating ? 0.7 : 1,

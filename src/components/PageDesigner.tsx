@@ -201,7 +201,7 @@ export const PageDesigner: React.FC = () => {
                   borderRadius: '6px',
                   fontSize: '12px',
                   fontWeight: '600',
-                  background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
+                  background: 'linear-gradient(135deg, #DC2626 0%, #991B1B 100%)',
                   color: 'white',
                   border: 'none',
                   cursor: 'pointer',
@@ -330,7 +330,7 @@ export const PageDesigner: React.FC = () => {
                   }}
                   onMouseOver={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)'
-                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(99, 102, 241, 0.4)'
+                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(220, 38, 38, 0.4)'
                   }}
                   onMouseOut={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)'
@@ -383,7 +383,7 @@ export const PageDesigner: React.FC = () => {
                         minWidth: '28px',
                         height: '28px',
                         borderRadius: '6px',
-                        backgroundColor: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
+                        background: 'linear-gradient(135deg, #DC2626 0%, #991B1B 100%)',
                         color: 'white',
                         display: 'flex',
                         alignItems: 'center',

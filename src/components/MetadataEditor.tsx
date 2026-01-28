@@ -130,7 +130,7 @@ export const MetadataEditor: React.FC = () => {
                 fontSize: isMobile ? '12px' : '13px',
                 fontWeight: '700',
                 marginBottom: '6px',
-                background: 'linear-gradient(90deg, #6366F1, #EC4899)',
+                background: 'linear-gradient(90deg, #DC2626, #000000)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
@@ -224,7 +224,7 @@ export const MetadataEditor: React.FC = () => {
                   fontSize: isMobile ? '12px' : '13px',
                   fontWeight: '700',
                   marginBottom: '6px',
-                  background: 'linear-gradient(90deg, #8B5CF6, #7C3AED)',
+                  background: 'linear-gradient(90deg, #991B1B, #7F1D1D)',
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent'
@@ -257,7 +257,7 @@ export const MetadataEditor: React.FC = () => {
                   fontSize: isMobile ? '12px' : '13px',
                   fontWeight: '700',
                   marginBottom: '6px',
-                  background: 'linear-gradient(90deg, #EC4899, #BE185D)',
+                  background: 'linear-gradient(90deg, #000000, #111827)',
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent'
@@ -290,7 +290,7 @@ export const MetadataEditor: React.FC = () => {
                 fontSize: isMobile ? '12px' : '13px',
                 fontWeight: '700',
                 marginBottom: '6px',
-                background: 'linear-gradient(90deg, #D4AF37, #F4C430)',
+                background: 'linear-gradient(90deg, #DC2626, #991B1B)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
@@ -320,7 +320,7 @@ export const MetadataEditor: React.FC = () => {
                 fontSize: isMobile ? '12px' : '13px',
                 fontWeight: '700',
                 marginBottom: '6px',
-                background: 'linear-gradient(90deg, #EC4899, #F43F5E)',
+                background: 'linear-gradient(90deg, #000000, #0F172A)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'

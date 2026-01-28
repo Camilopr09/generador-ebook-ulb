@@ -25,10 +25,10 @@ export const ExportPanel: React.FC = () => {
   }
 
   const exportButtons = [
-    { id: 'epub3', label: 'EPUB 3', icon: '📕', gradient: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)', color: '#6366F1' },
+    { id: 'epub3', label: 'EPUB 3', icon: '📕', gradient: 'linear-gradient(135deg, #DC2626 0%, #991B1B 100%)', color: '#DC2626' },
     { id: 'epub2', label: 'EPUB 2', icon: '📗', gradient: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', color: '#10B981' },
     { id: 'html', label: 'HTML', icon: '🌐', gradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)', color: '#F59E0B' },
-    { id: 'project', label: 'Proyecto', icon: '💾', gradient: 'linear-gradient(135deg, #EC4899 0%, #BE185D 100%)', color: '#EC4899' }
+    { id: 'project', label: 'Proyecto', icon: '💾', gradient: 'linear-gradient(135deg, #000000 0%, #1F2937 100%)', color: '#000000' }
   ]
 
   return (

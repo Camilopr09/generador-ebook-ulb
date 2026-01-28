@@ -137,7 +137,7 @@ export const CoverDesigner: React.FC = () => {
               fontSize: isMobile ? '13px' : '14px', 
               fontWeight: '700', 
               marginBottom: '8px',
-              background: 'linear-gradient(90deg, #6366F1, #EC4899)',
+              background: 'linear-gradient(90deg, #DC2626, #000000)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
@@ -178,14 +178,14 @@ export const CoverDesigner: React.FC = () => {
       {/* Premium Preview Card */}
       <div className="apple-card" style={{ 
         padding: isMobile ? '16px 18px' : '20px 24px',
-        background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(212, 175, 55, 0.02) 100%)',
-        border: '1.5px solid rgba(212, 175, 55, 0.15)'
+        background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(220, 38, 38, 0.02) 100%)',
+        border: '1.5px solid rgba(220, 38, 38, 0.15)'
       }}>
         <h3 style={{ 
           fontSize: isMobile ? '14px' : '15px', 
           fontWeight: '700', 
           marginBottom: '16px',
-          background: 'linear-gradient(90deg, #D4AF37, #F4C430)',
+          background: 'linear-gradient(90deg, #DC2626, #991B1B)',
           backgroundClip: 'text',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent'
@@ -202,8 +202,8 @@ export const CoverDesigner: React.FC = () => {
           justifyContent: 'center',
           textAlign: 'center',
           padding: isMobile ? '24px' : '32px',
-          background: 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%)',
-          boxShadow: '0 16px 32px rgba(99, 102, 241, 0.3), 0 0 60px rgba(236, 72, 153, 0.15)',
+          background: 'linear-gradient(135deg, #DC2626 0%, #991B1B 50%, #000000 100%)',
+          boxShadow: '0 16px 32px rgba(220, 38, 38, 0.3), 0 0 60px rgba(0, 0, 0, 0.15)',
           position: 'relative',
           overflow: 'hidden'
         }}>
@@ -248,7 +248,7 @@ export const CoverDesigner: React.FC = () => {
             bottom: '24px',
             width: '40px',
             height: '2px',
-            background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)',
+            background: 'linear-gradient(90deg, transparent, #FFFFFF, transparent)',
             zIndex: 1
           }} />
         </div>
