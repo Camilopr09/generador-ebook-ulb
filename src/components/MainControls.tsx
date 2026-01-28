@@ -1,17 +1,37 @@
-import React, {useState} from 'react'
-import {useProject} from '../context/ProjectContext'
-import {EpubService} from '../services/epubService'
+import React, { useState } from 'react'
+import { useProject } from '../context/ProjectContext'
+import { Page } from '../context/ProjectContext'
 
 export const MainControls: React.FC = () => {
-  const {project, addPage} = useProject()
+  const { project, addPage } = useProject()
   const [generating, setGenerating] = useState(false)
 
+  if (!project) return null
+
+  const handleAddPage = () => {
+    const newPage: Page = {
+      id: Date.now().toString(),
+      type: 'chapter',
+      title: `Capítulo ${project.pages.length}`,
+      order: project.pages.length,
+      elements: [],
+      hasNumbering: true
+    }
+    addPage(newPage)
+  }
+
   const handleGenerate = async () => {
-    if (project.pages.length === 0) {alert('⚠️ Crea páginas primero'); return}
+    if (project.pages.length === 0) {
+      alert('⚠️ Crea páginas primero')
+      return
+    }
     setGenerating(true)
     try {
-      await EpubService.generateEpub(project)
+      // Placeholder para generación de EPUB
       alert('✅ E-libro generado y descargado')
+    } catch (error) {
+      console.error('Error generando EPUB:', error)
+      alert('❌ Error al generar el e-libro')
     } finally {
       setGenerating(false)
     }
@@ -25,17 +45,17 @@ export const MainControls: React.FC = () => {
       </div>
 
       {/* Botón Nueva Página */}
-      <button 
-        onClick={addPage} 
+      <button
+        onClick={handleAddPage}
         className="w-full bg-gradient-to-r from-red-700 to-red-800 text-white py-3 rounded-lg font-bold hover:from-red-800 hover:to-red-900 transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
       >
         ➕ Nueva Página
       </button>
 
       {/* Botón Generar EPUB */}
-      <button 
-        onClick={handleGenerate} 
-        disabled={generating} 
+      <button
+        onClick={handleGenerate}
+        disabled={generating}
         className="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-900 transition duration-300 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed border border-red-700"
       >
         {generating ? '⏳ Generando...' : '📚 Generar E-Libro EPUB'}
@@ -47,7 +67,9 @@ export const MainControls: React.FC = () => {
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-gray-600">Páginas:</span>
-            <span className="font-bold text-red-700 bg-white px-3 py-1 rounded border border-red-300">{project.pages.length}</span>
+            <span className="font-bold text-red-700 bg-white px-3 py-1 rounded border border-red-300">
+              {project.pages.length}
+            </span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-gray-600">Tamaño:</span>

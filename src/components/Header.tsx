@@ -6,27 +6,33 @@ export const Header: React.FC = () => {
   const {project} = useProject()
 
   const handleSave = async () => {
-    await StorageService.saveProject(project)
-    alert('✅ Guardado')
+    if (project) {
+      await StorageService.saveProject(project)
+      alert('✅ Guardado')
+    }
   }
 
   return (
-    <header className="bg-black border-b-4 border-red-700 shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            {/* Logo ULB */}
-            <div className="w-12 h-12 bg-red-700 rounded-full flex items-center justify-center border-2 border-white">
-              <span className="text-white font-bold text-xs text-center">UL</span>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-white">📚 Generador E-Books</h1>
-              <p className="text-red-500 text-sm font-semibold">Universidad Libre de Barranquilla</p>
-            </div>
-          </div>
-          <button onClick={handleSave} className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-800 font-bold border border-white">
-            💾 Guardar
-          </button>
+    <header className="bg-white shadow-sm border-b">
+      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="flex-1">
+          <h1 className="text-2xl font-bold text-gray-900">📚 Generador eBook ULB</h1>
+          {project && <p className="text-sm text-gray-600 mt-1">{project.name}</p>}
+        </div>
+        <div className="flex items-center gap-4">
+          {project && (
+            <>
+              <button
+                onClick={handleSave}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-medium"
+              >
+                💾 Guardar
+              </button>
+              <span className="text-sm text-gray-600 whitespace-nowrap">
+                v{project.version} • {new Date(project.updatedAt).toLocaleDateString()}
+              </span>
+            </>
+          )}
         </div>
       </div>
     </header>

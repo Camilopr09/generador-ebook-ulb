@@ -47,8 +47,8 @@ const AppContent: React.FC = () => {
           <div className="space-y-4">
             <div className="p-4 bg-white rounded-lg shadow">
               <h3 className="font-bold mb-2">📄 Páginas ({project.pages.length})</h3>
-              <ul className="space-y-1 text-sm">
-                {project.pages.map(p => <li key={p.id} className="text-gray-600">{p.title}</li>)}
+              <ul className="space-y-1 text-sm max-h-48 overflow-y-auto">
+                {project.pages.map(p => <li key={p.id} className="text-gray-600">• {p.title}</li>)}
               </ul>
             </div>
             <div className="p-4 bg-white rounded-lg shadow">
