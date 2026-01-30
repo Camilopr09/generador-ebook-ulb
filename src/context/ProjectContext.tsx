@@ -59,8 +59,8 @@ export interface Project {
   theme: ThemeConfig
   pages: Page[]
   assets: AssetReference[]
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
   version: string
   changelog: ChangelogEntry[]
 }
@@ -119,6 +119,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
   const [project, setProject] = useState<Project | null>(null)
 
   const createProject = (name: string, template: Project['templateType']) => {
+    const now = new Date().toISOString()
     const newProject: Project = {
       id: Date.now().toString(),
       name,
@@ -138,8 +139,8 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       theme: defaultTheme,
       pages: [{ id: '0', type: 'cover', title: 'Portada', order: 0, elements: [], hasNumbering: false }],
       assets: [],
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
       version: '1.0.0',
       changelog: [{ version: '1.0.0', date: new Date(), changes: ['Proyecto creado'] }]
     }
@@ -148,7 +149,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   const updateProject = (updates: Partial<Project>) => {
     if (project) {
-      setProject({ ...project, ...updates, updatedAt: new Date() })
+      setProject({ ...project, ...updates, updatedAt: new Date().toISOString() })
     }
   }
 
@@ -157,7 +158,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       setProject({
         ...project,
         pages: [...project.pages, page],
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
     }
   }
@@ -167,7 +168,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       setProject({
         ...project,
         pages: project.pages.map(p => p.id === pageId ? { ...p, ...updates } : p),
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
     }
   }
@@ -177,7 +178,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       setProject({
         ...project,
         pages: project.pages.filter(p => p.id !== pageId),
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
     }
   }
@@ -187,7 +188,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       setProject({
         ...project,
         metadata: { ...project.metadata, ...metadata },
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
     }
   }
@@ -197,7 +198,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       setProject({
         ...project,
         theme: { ...project.theme, ...theme },
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
     }
   }
@@ -207,7 +208,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       setProject({
         ...project,
         assets: [...project.assets, asset],
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
     }
   }
@@ -217,7 +218,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       setProject({
         ...project,
         assets: project.assets.filter(a => a.id !== assetId),
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
     }
   }
@@ -230,7 +231,7 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
         ...project,
         version: newVersion,
         changelog: [...project.changelog, { version: newVersion, date: new Date(), changes }],
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
     }
   }

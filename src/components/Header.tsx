@@ -10,14 +10,13 @@ export const Header: React.FC = () => {
   const [isDownloading, setIsDownloading] = useState(false)
 
   const handleSave = async () => {
-    if (project) {
-      try {
-        await StorageService.saveProject(project)
-        alert('✅ Guardado perfectamente')
-      } catch (e) {
-        console.error(e)
-        alert('❌ Error al guardar')
-      }
+    if (!project) return
+    try {
+      await StorageService.saveProject(project)
+      alert('✅ Guardado perfectamente')
+    } catch (e) {
+      console.error(e)
+      alert('❌ Error al guardar')
     }
   }
 
@@ -39,8 +38,83 @@ export const Header: React.FC = () => {
     }
   }
 
-  const projectVersion = project?.version || '1.0'
-  const projectUpdatedAt = project?.updatedAt ? new Date(project.updatedAt).toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }) : ''
+  if (!project) {
+    return (
+      <header style={{ 
+        backgroundColor: 'var(--ulb-surface)',
+        borderBottom: '1px solid var(--ulb-border)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        backdropFilter: 'blur(20px)',
+        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
+        boxShadow: '0 4px 20px rgba(15, 23, 42, 0.06)'
+      }}>
+        <div style={{ 
+          maxWidth: '1280px', 
+          margin: '0 auto', 
+          padding: isMobile ? '10px 12px' : '14px 20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: isMobile ? '8px' : '16px',
+          flexWrap: isMobile ? 'wrap' : 'nowrap'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flex: 1 }}>
+            <div style={{
+              width: isMobile ? "40px" : "44px",
+              height: isMobile ? "40px" : "44px",
+              borderRadius: '12px',
+              background: 'var(--ulb-primary-gradient)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '18px',
+              boxShadow: '0 8px 16px rgba(99, 102, 241, 0.3)',
+              flexShrink: 0
+            }}>
+              📖
+            </div>
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <h1 style={{ 
+                fontSize: isMobile ? '16px' : '18px', 
+                fontWeight: '700', 
+                color: 'var(--ulb-text)', 
+                margin: 0, 
+                letterSpacing: '-0.5px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap'
+              }}>
+                {isMobile ? 'eBook Pro' : 'eBook Generator Pro'}
+              </h1>
+              {project && (
+                <p style={{ 
+                  fontSize: isMobile ? '11px' : '12px', 
+                  color: 'var(--ulb-text-muted)', 
+                  margin: '2px 0 0 0',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  fontWeight: '500'
+                }}>
+                  {project.name}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+    )
+  }
+
+  const projectName = String(project?.name || 'Proyecto sin nombre')
+  const projectVersion = String(project?.version || '1.0')
+  const projectUpdatedAt = project?.updatedAt 
+    ? new Date(project.updatedAt).toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }) 
+    : ''
 
   return (
     <header style={{ 
@@ -104,7 +178,7 @@ export const Header: React.FC = () => {
                 whiteSpace: 'nowrap',
                 fontWeight: '500'
               }}>
-                {project.name}
+                {projectName}
               </p>
             )}
           </div>
