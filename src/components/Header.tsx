@@ -8,15 +8,23 @@ export const Header: React.FC = () => {
   const { project } = useProject()
   const { isMobile } = useResponsive()
   const [isDownloading, setIsDownloading] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
 
   const handleSave = async () => {
-    if (!project) return
+    if (!project) {
+      alert('❌ No hay proyecto para guardar')
+      return
+    }
+
+    setIsSaving(true)
     try {
       await StorageService.saveProject(project)
       alert('✅ Guardado perfectamente')
-    } catch (e) {
-      console.error(e)
-      alert('❌ Error al guardar')
+    } catch (e: any) {
+      console.error('Error al guardar:', e)
+      alert(`❌ Error al guardar: ${e?.message || 'Error desconocido'}`)
+    } finally {
+      setIsSaving(false)
     }
   }
 
@@ -26,12 +34,17 @@ export const Header: React.FC = () => {
       return
     }
 
+    if (!project.name || project.name.trim() === '') {
+      alert('❌ El proyecto debe tener un nombre')
+      return
+    }
+
     setIsDownloading(true)
     try {
       await EpubService.generateAndDownloadEpub(project)
       alert('✅ ePub descargado correctamente')
     } catch (e: any) {
-      console.error(e)
+      console.error('Error al descargar:', e)
       alert(`❌ Error: ${e?.message || 'Error al generar el ePub'}`)
     } finally {
       setIsDownloading(false)
@@ -90,19 +103,6 @@ export const Header: React.FC = () => {
               }}>
                 {isMobile ? 'eBook Pro' : 'eBook Generator Pro'}
               </h1>
-              {project && (
-                <p style={{ 
-                  fontSize: isMobile ? '11px' : '12px', 
-                  color: 'var(--ulb-text-muted)', 
-                  margin: '2px 0 0 0',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  fontWeight: '500'
-                }}>
-                  {project.name}
-                </p>
-              )}
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@ export const Header: React.FC = () => {
   }
 
   const projectName = String(project?.name || 'Proyecto sin nombre')
-  const projectVersion = String(project?.version || '1.0')
+  const projectVersion = String(project?.version || '1.0.0')
   const projectUpdatedAt = project?.updatedAt 
     ? new Date(project.updatedAt).toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }) 
     : ''
@@ -168,73 +168,77 @@ export const Header: React.FC = () => {
             }}>
               {isMobile ? 'eBook Pro' : 'eBook Generator Pro'}
             </h1>
-            {project && (
-              <p style={{ 
-                fontSize: isMobile ? '11px' : '12px', 
-                color: 'var(--ulb-text-muted)', 
-                margin: '2px 0 0 0',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                fontWeight: '500'
-              }}>
-                {projectName}
-              </p>
-            )}
+            <p style={{ 
+              fontSize: isMobile ? '11px' : '12px', 
+              color: 'var(--ulb-text-muted)', 
+              margin: '2px 0 0 0',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              fontWeight: '500'
+            }}>
+              {projectName}
+            </p>
           </div>
         </div>
 
         {/* Acciones */}
-        {project && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '8px' : '12px' }}>
-            <button
-              onClick={handleSave}
-              className="apple-button"
-              style={{ 
-                padding: isMobile ? '8px 12px' : '10px 18px',
-                fontSize: isMobile ? '13px' : '14px',
-                minWidth: isMobile ? 'auto' : '120px',
-                background: 'var(--ulb-primary-gradient)',
-                color: 'white',
-                fontWeight: '600'
-              }}
-              title={isMobile ? 'Guardar' : ''}
-            >
-              {isMobile ? '💾' : '✓ Guardar'}
-            </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '8px' : '12px' }}>
+          <button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="apple-button"
+            style={{ 
+              padding: isMobile ? '8px 12px' : '10px 18px',
+              fontSize: isMobile ? '13px' : '14px',
+              minWidth: isMobile ? 'auto' : '120px',
+              background: 'var(--ulb-primary-gradient)',
+              color: 'white',
+              fontWeight: '600',
+              opacity: isSaving ? 0.6 : 1,
+              cursor: isSaving ? 'not-allowed' : 'pointer',
+              transition: 'all 0.3s ease',
+              border: 'none',
+              borderRadius: '8px'
+            }}
+            title={isMobile ? 'Guardar' : 'Guardar proyecto'}
+          >
+            {isSaving ? (isMobile ? '⏳' : 'Guardando...') : (isMobile ? '💾' : '✓ Guardar')}
+          </button>
 
-            <button
-              onClick={handleDownloadEpub}
-              disabled={isDownloading}
-              className="apple-button"
-              style={{
-                padding: isMobile ? '8px 12px' : '10px 18px',
-                fontSize: isMobile ? '13px' : '14px',
-                minWidth: isMobile ? 'auto' : '120px',
-                background: 'linear-gradient(90deg, #6366f1 0%, #818cf8 100%)',
-                color: 'white',
-                fontWeight: '600',
-                opacity: isDownloading ? 0.6 : 1,
-                cursor: isDownloading ? 'not-allowed' : 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-              title={isMobile ? 'Descargar ePub' : ''}
-            >
-              {isDownloading ? (isMobile ? '⏳' : 'Descargando...') : (isMobile ? '⬇️' : 'Descargar ePub')}
-            </button>
+          <button
+            onClick={handleDownloadEpub}
+            disabled={isDownloading}
+            className="apple-button"
+            style={{
+              padding: isMobile ? '8px 12px' : '10px 18px',
+              fontSize: isMobile ? '13px' : '14px',
+              minWidth: isMobile ? 'auto' : '120px',
+              background: 'linear-gradient(90deg, #6366f1 0%, #818cf8 100%)',
+              color: 'white',
+              fontWeight: '600',
+              opacity: isDownloading ? 0.6 : 1,
+              cursor: isDownloading ? 'not-allowed' : 'pointer',
+              transition: 'all 0.3s ease',
+              border: 'none',
+              borderRadius: '8px'
+            }}
+            title={isMobile ? 'Descargar ePub' : 'Descargar proyecto como ePub'}
+          >
+            {isDownloading ? (isMobile ? '⏳' : 'Descargando...') : (isMobile ? '⬇️' : 'Descargar ePub')}
+          </button>
 
-            {!isMobile && (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right', gap: '2px' }}>
-                <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--ulb-primary)' }}>
-                  v{projectVersion}
-                </span>
-                <span style={{ fontSize: '11px', color: 'var(--ulb-text-muted)', fontWeight: '500' }}>
-                  {projectUpdatedAt}
-                </span>
-              </div>
-            )}
-          </div>
-        )}
+          {!isMobile && (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right', gap: '2px' }}>
+              <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--ulb-primary)' }}>
+                v{projectVersion}
+              </span>
+              <span style={{ fontSize: '11px', color: 'var(--ulb-text-muted)', fontWeight: '500' }}>
+                {projectUpdatedAt}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   )
