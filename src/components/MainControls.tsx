@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useProject } from '../context/ProjectContext'
 import { useResponsive } from '../hooks/useResponsive'
+import { EpubService } from '../services/epubService'
 import { Page } from '../context/ProjectContext'
 
 export const MainControls: React.FC = () => {
@@ -25,16 +26,18 @@ export const MainControls: React.FC = () => {
   }
 
   const handleGenerate = async () => {
-    if (project.pages.length === 0) {
-      alert('⚠️ Crea páginas primero')
+    if (!project.name || project.name.trim() === '') {
+      alert('❌ El proyecto debe tener un nombre')
       return
     }
+
     setGenerating(true)
     try {
-      alert('✅ E-libro generado y descargado')
-    } catch (error) {
-      console.error('Error generando EPUB:', error)
-      alert('❌ Error al generar el e-libro')
+      await EpubService.generateAndDownloadEpub(project)
+      alert('✅ ePub descargado correctamente')
+    } catch (e: any) {
+      console.error('Error generando EPUB:', e)
+      alert(`❌ Error: ${e?.message || 'Error al generar el e-libro'}`)
     } finally {
       setGenerating(false)
     }
@@ -130,7 +133,7 @@ export const MainControls: React.FC = () => {
           }} />
         </button>
 
-        {/* Download EPUB Button - Pink Gradient */}
+        {/* Download EPUB Button - Fixed Version */}
         <button
           onClick={handleGenerate}
           disabled={generating}
@@ -139,10 +142,10 @@ export const MainControls: React.FC = () => {
           className="apple-button"
           style={{ 
             background: generating 
-              ? 'linear-gradient(135deg, #000000 0%, #1F2937 100%)'
+              ? 'linear-gradient(135deg, #6366f1 0%, #818cf8 100%)' 
               : hoverDownload
-              ? 'linear-gradient(135deg, #000000 0%, #111827 100%)'
-              : 'linear-gradient(135deg, #000000 0%, #0F172A 100%)',
+              ? 'linear-gradient(135deg, #6366f1 0%, #818cf8 100%)'
+              : 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
             color: 'white',
             fontWeight: '700',
             padding: buttonPadding,
@@ -152,19 +155,20 @@ export const MainControls: React.FC = () => {
             borderRadius: '12px',
             cursor: generating ? 'not-allowed' : 'pointer',
             boxShadow: generating
-              ? '0 8px 16px rgba(236, 72, 153, 0.2)'
+              ? '0 8px 16px rgba(99, 102, 241, 0.2)'
               : hoverDownload
-              ? '0 12px 24px rgba(236, 72, 153, 0.35)'
-              : '0 8px 16px rgba(236, 72, 153, 0.25)',
+              ? '0 12px 24px rgba(99, 102, 241, 0.35)'
+              : '0 8px 16px rgba(99, 102, 241, 0.25)',
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             transform: !generating && hoverDownload ? 'translateY(-2px)' : 'translateY(0)',
             opacity: generating ? 0.85 : 1,
             position: 'relative',
             overflow: 'hidden'
           }}
+          title={generating ? 'Descargando...' : 'Descargar proyecto como ePub'}
         >
           <span style={{ position: 'relative', zIndex: 2 }}>
-            {generating ? '⏳ Generando eBook...' : isMobile ? '📥 EPUB' : '📥 Descargar EPUB'}
+            {generating ? '⏳ Descargando...' : isMobile ? '⬇️ EPUB' : '⬇️ Descargar EPUB'}
           </span>
           {/* Shine effect overlay */}
           <div style={{
