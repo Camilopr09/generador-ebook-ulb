@@ -1,18 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useProject } from '../context/ProjectContext'
 import { StorageService } from '../services/storageService'
 import { useResponsive } from '../hooks/useResponsive'
+import { EpubService } from '../services/epubService'
 
 export const Header: React.FC = () => {
   const { project } = useProject()
   const { isMobile } = useResponsive()
+  const [isDownloading, setIsDownloading] = useState(false)
 
   const handleSave = async () => {
     if (project) {
-      await StorageService.saveProject(project)
-      alert('✅ Guardado perfectamente')
+      try {
+        await StorageService.saveProject(project)
+        alert('✅ Guardado perfectamente')
+      } catch (e) {
+        console.error(e)
+        alert('❌ Error al guardar')
+      }
     }
   }
+
+  const handleDownloadEpub = async () => {
+    if (!project) {
+      alert('❌ No hay proyecto para descargar')
+      return
+    }
+
+    setIsDownloading(true)
+    try {
+      await EpubService.generateAndDownloadEpub(project)
+      alert('✅ ePub descargado correctamente')
+    } catch (e: any) {
+      console.error(e)
+      alert(`❌ Error: ${e?.message || 'Error al generar el ePub'}`)
+    } finally {
+      setIsDownloading(false)
+    }
+  }
+
+  const projectVersion = project?.version || '1.0'
+  const projectUpdatedAt = project?.updatedAt ? new Date(project.updatedAt).toLocaleDateString('es-ES', { month: 'short', day: 'numeric' }) : ''
 
   return (
     <header style={{ 
@@ -101,13 +129,33 @@ export const Header: React.FC = () => {
               {isMobile ? '💾' : '✓ Guardar'}
             </button>
 
+            <button
+              onClick={handleDownloadEpub}
+              disabled={isDownloading}
+              className="apple-button"
+              style={{
+                padding: isMobile ? '8px 12px' : '10px 18px',
+                fontSize: isMobile ? '13px' : '14px',
+                minWidth: isMobile ? 'auto' : '120px',
+                background: 'linear-gradient(90deg, #6366f1 0%, #818cf8 100%)',
+                color: 'white',
+                fontWeight: '600',
+                opacity: isDownloading ? 0.6 : 1,
+                cursor: isDownloading ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              title={isMobile ? 'Descargar ePub' : ''}
+            >
+              {isDownloading ? (isMobile ? '⏳' : 'Descargando...') : (isMobile ? '⬇️' : 'Descargar ePub')}
+            </button>
+
             {!isMobile && (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right', gap: '2px' }}>
                 <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--ulb-primary)' }}>
-                  v{project.version}
+                  v{projectVersion}
                 </span>
                 <span style={{ fontSize: '11px', color: 'var(--ulb-text-muted)', fontWeight: '500' }}>
-                  {new Date(project.updatedAt).toLocaleDateString('es-ES', { month: 'short', day: 'numeric' })}
+                  {projectUpdatedAt}
                 </span>
               </div>
             )}
